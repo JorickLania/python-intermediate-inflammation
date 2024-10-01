@@ -52,6 +52,9 @@ def patient_normalise(data):
     :param data: 2D array with inflammation data, rows containing single patient
                  measurements for all days.
     :returns:    Array of normalised values between zero and one"""
+    if np.any(data < 0):
+        raise ValueError('Inflammation values can not be negative')
+
     max = np.max(data, axis=1)
     with np.errstate(invalid='ignore', divide='ignore'):
         normalised = data / max[:, np.newaxis]
